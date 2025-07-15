@@ -18,6 +18,7 @@ import Wrapper from '../layout/Wrapper/Wrapper'
 import App from '../layout/App/App'
 import AsideRoutes from '../layout/Aside/AsideRoutes'
 import { ToastCloseButton } from '../components/bootstrap/Toasts'
+import 'bootstrap-icons/font/bootstrap-icons.css';
 
 const queryClient = new QueryClient({
 	defaultOptions: {

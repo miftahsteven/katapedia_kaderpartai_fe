@@ -109,7 +109,7 @@ const Login: NextPage<ILoginProps> = ({ isSignUp }) => {
 						handleOnClick()
 					},
 					onError: (error) => {
-						formik.setFieldError('loginPassword', 'Username and password do not match.')
+						formik.setFieldError('loginPassword', 'Check Server.')
 					},
 				},
 			)
@@ -205,25 +205,16 @@ const Login: NextPage<ILoginProps> = ({ isSignUp }) => {
 				<title>{singUpStatus ? 'Sign Up' : 'Login'}</title>
 			</Head>
 			<Page className='p-0'>
-				<div className='row h-100 align-items-center justify-content-center'>
+				<div className='row h-100 align-items-center justify-content-center'
+				style={{
+					backgroundImage: `url('/background_katapedia.jpg')`,
+					backgroundSize: 'cover',
+					backgroundPosition: 'center',
+					backgroundRepeat: 'no-repeat'}}>
 					<div className='col-xl-4 col-lg-6 col-md-8 shadow-3d-container'>
 						<Card className='' data-tour='login-page'>
-							<CardBody>
-								<div className='text-center my-5'>
-									<Link
-										href='/'
-										className={classNames(
-											'text-decoration-none  fw-bold display-2',
-											{
-												'text-dark': !darkModeStatus,
-												'text-light': darkModeStatus,
-											},
-										)}>
-										{/* <Logo width={200} /> */}
-										OD-SYST
-									</Link>
-								</div>
-								<div
+							<CardBody>								
+								{/* <div
 									className={classNames('rounded-3', {
 										'bg-l10-dark': !darkModeStatus,
 										'bg-dark': darkModeStatus,
@@ -256,9 +247,9 @@ const Login: NextPage<ILoginProps> = ({ isSignUp }) => {
 											</Button>
 										</div>
 									</div>
-								</div>
+								</div> */}
 
-								<LoginHeader isNewUser={singUpStatus} />
+								{/* <LoginHeader isNewUser={singUpStatus} /> */}
 								<div
 									className={classNames(
 										'text-danger',
@@ -491,7 +482,7 @@ const Login: NextPage<ILoginProps> = ({ isSignUp }) => {
 									'link-light': singUpStatus,
 									'link-dark': !singUpStatus,
 								})}>
-								LIMANARA SOLUSI DIGITAL &copy;
+								KATAPEDIA &copy;
 							</Link>
 							{/* <Link
 								href='/'

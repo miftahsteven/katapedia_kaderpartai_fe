@@ -20,13 +20,18 @@ const DefaultHeader = () => {
 						deviceScreen.width >= Number(process.env.NEXT_PUBLIC_MOBILE_BREAKPOINT_SIZE)
 					}
 				/> */}
-				<img
+				{/* <img
 					src={LogoLimanara}
 					alt='Limanara Logo'
 					width={256} // TODO auto
 					height={65}
 					style={{ marginLeft: -30, borderTopLeftRadius: 10, borderBottomLeftRadius: 10 }}
-				/>
+				/> */}
+				<div className='col-12 font'>
+					<h1 className='text-left'>
+					<strong>#KADERPARTAI</strong> 
+					</h1>
+				</div>
 			</HeaderLeft>
 			<CommonHeaderRight afterChildren={<CommonHeaderChat />} />
 		</Header>
