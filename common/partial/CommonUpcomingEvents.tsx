@@ -75,15 +75,15 @@ const CommonUpcomingEvents: FC<ICommonUpcomingEventsProps> = ({ isFluid }) => {
 	})
 
 	const [currentPage, setCurrentPage] = useState(1)
-	const [perPage, setPerPage] = useState(PER_COUNT['5'])
+	const [perPage, setPerPage] = useState(PER_COUNT['50'])
 	const { items, requestSort, getClassNamesFor } = useSortableData(data)
 
 	return (
 		<>
 			<Card stretch={isFluid}>
 				<CardHeader borderSize={1}>
-					<CardLabel icon='Alarm' iconColor='info'>
-						<CardTitle>Upcoming Appointments</CardTitle>
+					<CardLabel icon='People' iconColor='dark'>
+						<CardTitle>List Anggota</CardTitle>
 					</CardLabel>
 					<CardActions>
 						<Button
@@ -102,23 +102,13 @@ const CommonUpcomingEvents: FC<ICommonUpcomingEventsProps> = ({ isFluid }) => {
 					<table className='table table-modern'>
 						<thead>
 							<tr>
-								<td style={{ width: 60 }} />
-								<th
-									onClick={() => requestSort('date')}
-									className='cursor-pointer text-decoration-underline'>
-									Date / Time{' '}
-									<Icon
-										size='lg'
-										className={getClassNamesFor('date')}
-										icon='FilterList'
-									/>
-								</th>
-								<th>Customer</th>
-								<th>Assigned to</th>
-								<th>Service</th>
-								<th>Duration</th>
-								<th>Payment</th>
-								<th>Status</th>
+								<th>Profile</th>																							
+								<th>Pertambahan Follower</th>		
+								<th>Pertambahan Posting</th>								
+								<th>Total Views</th>
+								<th>Engagement</th>
+								<th>Reach</th>
+								<th>Impression</th>
 								<td />
 							</tr>
 						</thead>
@@ -126,104 +116,100 @@ const CommonUpcomingEvents: FC<ICommonUpcomingEventsProps> = ({ isFluid }) => {
 							{dataPagination(items, currentPage, perPage).map((item) => (
 								<tr key={item.id}>
 									<td>
-										<Button
-											isOutline={!darkModeStatus}
-											color='dark'
-											isLight={darkModeStatus}
-											className={classNames({
-												'border-light': !darkModeStatus,
-											})}
-											icon='Info'
-											onClick={handleUpcomingDetails}
-											aria-label='Detailed information'
-										/>
-									</td>
-									<td>
-										<div className='d-flex align-items-center'>
-											<span
-												className={classNames(
-													'badge',
-													'border border-2',
-													[`border-${themeStatus}`],
-													'rounded-circle',
-													'bg-success',
-													'p-2 me-2',
-													`bg-${item.status.color}`,
-												)}>
-												<span className='visually-hidden'>
-													{item.status.name}
-												</span>
-											</span>
-											<span className='text-nowrap'>
-												{dayjs(`${item.date} ${item.time}`).format(
-													'MMM Do YYYY, h:mm a',
-												)}
-											</span>
-										</div>
-									</td>
-									<td>
-										<div>
-											<div>{item.customer.name}</div>
-											<div className='small text-muted'>
-												{item.customer.email}
-											</div>
-										</div>
-									</td>
-									<td>
 										<div className='d-flex'>
 											<div className='flex-shrink-0'>
 												<Avatar
 													src={item.assigned.src}
 													color={item.assigned.color}
-													size={36}
+													size={40}
 												/>
 											</div>
 											<div className='flex-grow-1 ms-3 d-flex align-items-center text-nowrap'>
-												{`${item.assigned.name} ${item.assigned.surname}`}
+												{`${item.assigned.name}`}
 											</div>
 										</div>
-									</td>
-									<td>{item.service.name}</td>
-									<td>{item.duration}</td>
-									<td>{item.payment && priceFormat(item.payment)}</td>
+									</td>			
 									<td>
-										<Dropdown>
-											<DropdownToggle hasIcon={false}>
-												<Button
-													isLink
-													color={item.status.color}
-													icon='Circle'
-													className='text-nowrap'>
-													{item.status.name}
-												</Button>
-											</DropdownToggle>
-											<DropdownMenu>
-												{Object.keys(EVENT_STATUS).map((key) => (
-													<DropdownItem key={key}>
-														<div>
-															<Icon
-																icon='Circle'
-																color={EVENT_STATUS[key].color}
-															/>
-															{EVENT_STATUS[key].name}
-														</div>
-													</DropdownItem>
-												))}
-											</DropdownMenu>
-										</Dropdown>
+										<div className='d-flex align-items-center'>
+											<Icon
+												icon='People'
+												className='me-2'
+												size='lg'
+												color={item.customer.color}
+											/>
+											{/** create random number 100-10000 */}
+											<div className='flex-grow-1'>
+												{Math.floor(Math.random() * (10000 - 100 + 1)) + 100} Followers
+											</div>											
+										</div>
+									</td>			
+									{/* create random 1-50 */}												
+									<td>
+										<div className='d-flex align-items-center'>
+											<Icon
+												icon='PostAdd'
+												className='me-2'
+												size='lg'
+												color={item.customer.color}
+											/>
+											{Math.floor(Math.random() * 50) + 1} Posts
+										</div>
+									</td>									
+									<td>
+										{/* create random number not currency, number between 1000 and 1000000 */}
+										<div className='d-flex align-items-center'>
+											<Icon
+												icon='Visibility'
+												className='me-2'
+												size='lg'
+												color={item.customer.color}
+											/>
+											{Math.floor(Math.random() * (1000000 - 1000 + 1)) + 1000} Views
+										</div>
+									</td>							
+									<td>
+										<div className='d-flex align-items-center'>
+											<Icon
+												icon='ThumbUp'
+												className='me-2'
+												size='lg'
+												color={item.customer.color}
+											/>
+											{Math.floor(Math.random() * 100) + 1}%
+										</div>
+									</td>								
+									<td>
+										<div className='d-flex align-items-center'>
+											<Icon
+												icon='Public'
+												className='me-2'
+												size='lg'
+												color={item.customer.color}
+											/>
+											{Math.floor(Math.random() * 100) + 1}%
+										</div>
 									</td>
 									<td>
+										<div className='d-flex align-items-center'>
+											<Icon
+												icon='Visibility'
+												className='me-2'
+												size='lg'
+												color={item.customer.color}
+											/>
+											{Math.floor(Math.random() * 100) + 1}%
+										</div>	
+									</td>
+									<td>
+										{/** button, form generator get data from instagram function  */}
 										<Button
-											isOutline={!darkModeStatus}
-											color='dark'
-											isLight={darkModeStatus}
-											className={classNames('text-nowrap', {
-												'border-light': !darkModeStatus,
-											})}
-											icon='Edit'
-											onClick={handleUpcomingEdit}>
-											Edit
-										</Button>
+											color="primary"
+											onClick={handleUpcomingDetails}
+											className='me-2'
+											icon='StackedLineChart'
+											size='lg'
+										/>
+
 									</td>
 								</tr>
 							))}
@@ -232,7 +218,7 @@ const CommonUpcomingEvents: FC<ICommonUpcomingEventsProps> = ({ isFluid }) => {
 				</CardBody>
 				<PaginationButtons
 					data={items}
-					label='items'
+					label='anggota'
 					setCurrentPage={setCurrentPage}
 					currentPage={currentPage}
 					perPage={perPage}

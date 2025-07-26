@@ -27,10 +27,10 @@ const DefaultHeader = () => {
 					height={65}
 					style={{ marginLeft: -30, borderTopLeftRadius: 10, borderBottomLeftRadius: 10 }}
 				/> */}
-				<div className='col-12 font-size-20'>
-					<h3 className='text-left'>
-					<strong>#KATAPEDIA</strong> 
-					</h3>
+				<div className='col-12 font'>
+					<h1 className='text-left'>
+					<strong>#KADERPARTAI</strong> 
+					</h1>
 				</div>
 			</HeaderLeft>
 			<CommonHeaderRight afterChildren={<CommonHeaderChat />} />

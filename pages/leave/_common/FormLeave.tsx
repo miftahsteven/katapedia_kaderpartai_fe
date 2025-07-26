@@ -14,11 +14,18 @@ import FormGroup from '../../../components/bootstrap/forms/FormGroup';
 import Input from '../../../components/bootstrap/forms/Input';
 import Textarea from '../../../components/bootstrap/forms/Textarea';
 import showNotification from '../../../components/extras/showNotification';
+<<<<<<< HEAD
 import  useMutateCreateLeave  from '../../../hooks/useMutateCreateLeave'; 
 import Select from '../../../components/bootstrap/forms/Select'
 
 interface IFormLeaveProps {  
     id: string;  
+=======
+import  useMutateCreateLeave  from '../hooks/useMutateCreateLeave'; 
+import Select from '../../../components/bootstrap/forms/Select'
+
+interface IFormLeaveProps {    
+>>>>>>> d4226f6e429057c079e5a1c0fb5ab73d31c4693a
     isOpen: boolean;
     setIsOpen: (isOpen: boolean) => void;
 }
@@ -120,7 +127,11 @@ const FormLeave: React.FC<IFormLeaveProps> = ({ id, isOpen, setIsOpen }) => {
                 leave_start_date: values.leave_start_date,
                 leave_end_date: values.leave_end_date,
                 leave_reason: values.leave_reason,
+<<<<<<< HEAD
                 leave_status: Number(values.leave_status),
+=======
+                leave_status: values.leave_status,
+>>>>>>> d4226f6e429057c079e5a1c0fb5ab73d31c4693a
             })
                 .then(() => {
                     showNotification('success', 'Cuti berhasil diajukan');

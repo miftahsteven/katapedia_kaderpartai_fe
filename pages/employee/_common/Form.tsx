@@ -22,7 +22,11 @@ import Button from '../../../components/bootstrap/Button'
 import Textarea from '../../../components/bootstrap/forms/Textarea'
 import Select from '../../../components/bootstrap/forms/Select'
 import { stat } from 'fs'
+<<<<<<< HEAD
 import useMutateCreateContract from '../../../hooks/useMutateCreateContract'
+=======
+import useMutateCreateContract from '../hooks/useMutateCreateContract'
+>>>>>>> d4226f6e429057c079e5a1c0fb5ab73d31c4693a
 import { useRouter } from 'next/router'
 export const SELECT_TYPE_OPTIONS = [
 	{ value: 0, text: 'PKWT' },

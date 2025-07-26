@@ -30,7 +30,11 @@ import Page from '../../../layout/Page/Page'
 import Card, { CardBody } from '../../../components/bootstrap/Card'
 import { getColorNameWithIndex } from '../../../common/data/enumColors'
 import { getFirstLetter, priceFormat } from '../../../helpers/helpers'
+<<<<<<< HEAD
 import useQueryAllLeaving from '../../../hooks/useQueryAllLeaving'
+=======
+import useQueryAllLeaving from '../hooks/useQueryAllLeaving'
+>>>>>>> d4226f6e429057c079e5a1c0fb5ab73d31c4693a
 import FormLeave from '../_common/FormLeave'
 
 const Index: NextPage = () => {
@@ -286,7 +290,12 @@ const Index: NextPage = () => {
 			</Page>			
 			<FormLeave				
 				isOpen={tambahModalStatus}
+<<<<<<< HEAD
 				setIsOpen={setTambahModalStatus} id={''}/>										
+=======
+				setIsOpen={setTambahModalStatus}				
+			/>										
+>>>>>>> d4226f6e429057c079e5a1c0fb5ab73d31c4693a
 		</PageWrapper>
 	)
 }

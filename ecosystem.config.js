@@ -1,7 +1,7 @@
 {
     apps : [
       {
-        name      : "odsyst-app",
+        name      : "katapedia-app",
         script    : "npx",        
         interpreter: "none",
         args: "next dev"

@@ -24,6 +24,7 @@ import Select from '../../../components/bootstrap/forms/Select'
 import Label from '../../../components/bootstrap/forms/Label'
 import Checks, { ChecksGroup } from '../../../components/bootstrap/forms/Checks'
 //import PAYMENTS from '../../../common/data/enumPaymentMethod';
+<<<<<<< HEAD
 //import useQueryRefDepartments from '../../../hooks/useQueryRefDepartments'
 import { stat } from 'fs'
 import useMutateCreateRecruitment from '../../../hooks/useMutateCreateRecruitment'
@@ -32,6 +33,16 @@ import useQueryProv from '../../../hooks/useQueryProv'
 import useQueryCities from '../../../hooks/useQueryCities'
 import useQueryDistricts from '../../../hooks/useQueryDistricts'
 import useQueryLocs from '../../../hooks/useQueryLocs'
+=======
+import useQueryRefDepartments from '../../recruitment/hooks/useQueryRefDepartments'
+import { stat } from 'fs'
+import useMutateCreateRecruitment from '../../recruitment/hooks/useMutateCreateRecruitment'
+import useQueryPositionsSelect from '../../recruitment/hooks/useQueryPositionsSelect'
+import useQueryProv from '../../recruitment/hooks/useQueryProv'
+import useQueryCities from '../../recruitment/hooks/useQueryCities'
+import useQueryDistricts from '../../recruitment/hooks/useQueryDistricts'
+import useQueryLocs from '../../recruitment/hooks/useQueryLocs'
+>>>>>>> d4226f6e429057c079e5a1c0fb5ab73d31c4693a
 import { useRouter } from 'next/router'
 import { Value } from 'sass'
 
@@ -70,7 +81,11 @@ const CustomerEditModal: FC<ICustomerEditModalProps> = ({
 	const dataPosition = useQueryPositionsSelect()
 	let dataPositionRef = []
 	if (dataPosition !== undefined) {
+<<<<<<< HEAD
 		dataPositionRef = dataPosition.data.map((items: any) => ({
+=======
+		dataPositionRef = dataPosition.data.map((items) => ({
+>>>>>>> d4226f6e429057c079e5a1c0fb5ab73d31c4693a
 			value: items.id,
 			text: `${items.position_name}`,
 			position_code: items.position_code,
@@ -87,7 +102,11 @@ const CustomerEditModal: FC<ICustomerEditModalProps> = ({
 	const dataProvince = useQueryProv()
 	let dataProvRef = []
 	if (dataProvince !== undefined) {
+<<<<<<< HEAD
 		dataProvRef = dataProvince.data.map((items: any) => ({
+=======
+		dataProvRef = dataProvince.data.map((items) => ({
+>>>>>>> d4226f6e429057c079e5a1c0fb5ab73d31c4693a
 			value: items.prov_id,
 			text: `${items.prov_name}`,
 		}))
@@ -123,6 +142,7 @@ const CustomerEditModal: FC<ICustomerEditModalProps> = ({
 		)
 	}
 
+<<<<<<< HEAD
 	interface ItemData {
 		id?: number
 		fullname?: string
@@ -149,6 +169,9 @@ const CustomerEditModal: FC<ICustomerEditModalProps> = ({
 	}
 
 	const itemData: ItemData = {}
+=======
+	const itemData = {}
+>>>>>>> d4226f6e429057c079e5a1c0fb5ab73d31c4693a
 	//const item = id && Array.isArray(itemData) ? itemData : {};
 	const item = id ? itemData : {}
 	const { mutate, isSuccess, isError } = useMutateCreateRecruitment()
@@ -222,7 +245,11 @@ const CustomerEditModal: FC<ICustomerEditModalProps> = ({
 		},
 		validateOnChange: false,
 		onSubmit: (values) => {
+<<<<<<< HEAD
 			const today = values.birthdate ? new Date(values.birthdate) : new Date()
+=======
+			const today = new Date(values.birthdate)
+>>>>>>> d4226f6e429057c079e5a1c0fb5ab73d31c4693a
 
 			const yyyy = today.getFullYear()
 			const mm = String(today.getMonth() + 1).padStart(2, '0')
@@ -232,6 +259,8 @@ const CustomerEditModal: FC<ICustomerEditModalProps> = ({
 			//console.log('Data Tanggal Lahir', formattedDate)
 			const formData = new FormData()
 			//console.log(' ---> submit', JSON.stringify(values))
+<<<<<<< HEAD
+<<<<<<<< HEAD:pages/employee/_common/TambahAnggota.tsx
 			formData.append('position_id', values.position_id || '')
 			formData.append('fullname', values.fullname || '')
 			formData.append('gender', values.gender || '')
@@ -249,6 +278,28 @@ const CustomerEditModal: FC<ICustomerEditModalProps> = ({
 			formData.append('npwp', values.npwp || '')
 			formData.append('status', values.status?.toString() || '1')
 			formData.append('cv_uploaded', values.cv_uploaded || '')
+========
+=======
+>>>>>>> d4226f6e429057c079e5a1c0fb5ab73d31c4693a
+			formData.append('position_id', values.position_id)
+			formData.append('fullname', values.fullname)
+			formData.append('gender', values.gender)
+			formData.append('birthdate', formattedDate)
+			formData.append('experience', values.experience)
+			formData.append('education', values.education)
+			formData.append('email', values.email)
+			formData.append('phone', values.phone)
+			formData.append('nik', values.nik)
+			formData.append('address', values.address)
+			formData.append('prov_id', values.prov_id)
+			formData.append('city_id', values.city_id)
+			formData.append('district_id', values.district_id)
+			formData.append('subdistrict_id', values.subdistrict_id)
+			formData.append('npwp', values.npwp)
+			formData.append('status', values.status)
+			formData.append('cv_uploaded', values.cv_uploaded)
+<<<<<<< HEAD
+>>>>>>>> d4226f6e429057c079e5a1c0fb5ab73d31c4693a:pages/recruitment/_common/EditModalRecruitment.tsx
 			console.log('---> data append', Object.fromEntries(formData))
 			mutate(
 				{
@@ -270,6 +321,11 @@ const CustomerEditModal: FC<ICustomerEditModalProps> = ({
 					status: formik.values.status?.toString() || '1',
 					//cv_uploaded: formik.values.cv_uploaded,
 				},
+=======
+			console.log('---> data append', Object.fromEntries(formData))
+			mutate(
+				{ ...Object.fromEntries(formData) },
+>>>>>>> d4226f6e429057c079e5a1c0fb5ab73d31c4693a
 				{
 					onSuccess: (data) => {
 						if (data) {
@@ -308,7 +364,11 @@ const CustomerEditModal: FC<ICustomerEditModalProps> = ({
 		const { name, value } = e.target
 		//console.log(' ---> getSelectData', JSON.stringify(value))
 		formik.setFieldValue(name, value)
+<<<<<<< HEAD
 		const selectedItem = dataPositionRef.find((item: any) => item.value == Number(value))
+=======
+		const selectedItem = dataPositionRef.find((item) => item.value == Number(value))
+>>>>>>> d4226f6e429057c079e5a1c0fb5ab73d31c4693a
 		//console.log(' ---> selectedItem', JSON.stringify(selectedItem))
 		if (selectedItem) {
 			formik.setFieldValue('position_code', selectedItem.position_code)

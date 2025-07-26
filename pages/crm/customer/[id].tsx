@@ -370,7 +370,7 @@ export async function getStaticPaths() {
 	return {
 		paths: [
 			// String variant:
-			'/crm/customer/1',
+			'/anggota/detail/2',
 			// Object variant:
 			{ params: { id: '2' } },
 		],

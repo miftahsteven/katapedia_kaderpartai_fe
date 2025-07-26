@@ -160,7 +160,7 @@ const Id: NextPage = () => {
 												<i className={`bi bi-instagram px-2`} style={{ fontSize: "3rem" }}></i>
 											</div>
 											<div className='flex-grow-1 ms-3'>
-												<div className='fw-bold fs-3 mb-0'>1200</div>
+												<div className='fw-bold fs-3 mb-0'>544,539</div>
 												<div className='text-muted mt-n2 truncate-line-1'>
 													Followers
 												</div>
@@ -177,7 +177,7 @@ const Id: NextPage = () => {
 											</div>
 											<div className='flex-grow-1 ms-3'>
 												<div className='fw-bold fs-3 mb-0'>
-													1320
+													132,123
 												</div>
 												<div className='text-muted mt-n2 truncate-line-1'>
 													Total Views
