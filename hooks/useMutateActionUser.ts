@@ -18,28 +18,28 @@ const register = async ({ id, statusUser, action }: { id: string; statusUser: st
 }
 
 const useMutateActionUser = () => {
-	//const navigate = useNavigate();
-	const queryClient = useQueryClient()
+    const queryClient = useQueryClient();
 
-	return useMutation({
-		mutationFn: register,
-		onSuccess: (data) => {
-			queryClient.invalidateQueries({ queryKey: 'user-inactivated-remove'})
+    return useMutation({
+        mutationFn: register,
+        onSuccess: (data) => {
+            // Wrap the queryKey string in an array
+            queryClient.invalidateQueries({ queryKey: ['user-inactivated-remove'] });
 
-			return data
-		},
-		onError: (error: any) => {
-			console.log(' ERROR ', error)
-			//alert(error.response.data?.message ?? error?.message)
-			//window.location = '/auth/login?sessionNull=true'
-			if (error.response && error.response.status === 502) {
-				window.location.href = '/auth/login?sessionNull=true'
-				return
-			}
-			//if error not 502 just return alert
-			alert(error.response.data?.message ?? error?.message)
-		},
-	})
-}
+            return data;
+        },
+        onError: (error: any) => {
+            console.log(' ERROR ', error);
 
-export default useMutateActionUser
+            if (error.response && error.response.status === 502) {
+                window.location.href = '/auth/login?sessionNull=true';
+                return;
+            }
+
+            // If error is not 502, show an alert
+            alert(error.response?.data?.message ?? error?.message);
+        },
+    });
+};
+
+export default useMutateActionUser;
