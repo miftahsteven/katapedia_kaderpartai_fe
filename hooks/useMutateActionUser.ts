@@ -1,21 +1,19 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { useNavigate } from 'react-router-dom'
-
-import api from '../utilities/libs/axios'
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import api from '../utilities/libs/axios';
 
 const register = async ({ id, statusUser, action }: { id: string; statusUser: string; action: 'remove' | 'add' }) => {
-	console.log('act :', action)
-	const { data } = await api.request({
-		method: action == 'remove' ? 'DELETE' : 'POST',
-		url: action == 'remove' ? `/emp/delete-contract` : `/auth/inactivated`,
-		data: {
-			id,
-			statusUser,
-		},
-	})
+    console.log('act :', action);
+    const { data } = await api.request({
+        method: action === 'remove' ? 'DELETE' : 'POST',
+        url: action === 'remove' ? `/emp/delete-contract` : `/auth/inactivated`,
+        data: {
+            id,
+            statusUser,
+        },
+    });
 
-	return data
-}
+    return data;
+};
 
 const useMutateActionUser = () => {
     const queryClient = useQueryClient();
