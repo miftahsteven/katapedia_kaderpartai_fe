@@ -456,8 +456,8 @@ const CustomerEditModal: FC<ICustomerEditModalProps> = ({
 												disabled={Number(id) > 0 ? true : false}
 												name='employee_number'
 												value={formik.values.employee_number}
-												invalidFeedback={formik.errors.employee_number}
-												isTouched={formik.touched.employee_number}
+												invalidFeedback={typeof formik.errors.employee_number === 'string' ? formik.errors.employee_number : undefined}
+												isTouched={typeof formik.touched.employee_number === 'boolean' ? formik.touched.employee_number : undefined}
 												onFocus={() => {
 													formik.setErrors({})
 												}}
