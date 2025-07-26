@@ -24,10 +24,10 @@ import Select from '../../../components/bootstrap/forms/Select'
 import Label from '../../../components/bootstrap/forms/Label'
 import Checks, { ChecksGroup } from '../../../components/bootstrap/forms/Checks'
 //import PAYMENTS from '../../../common/data/enumPaymentMethod';
-import useQueryStatusRec from '../hooks/useQueryStatusRec'
-import useQueryInterviewer from '../hooks/useQueryInterviewer'
+import useQueryStatusRec from '../../../hooks/useQueryStatusRec'
+import useQueryInterviewer from '../../../hooks/useQueryInterviewer'
 import { stat } from 'fs'
-import useMutateUpdateStatusRec from '../hooks/useMutateUpdateStatusRec'
+import useMutateUpdateStatusRec from '../../../hooks/useMutateUpdateStatusRec'
 import { useRouter } from 'next/router'
 
 interface ICustomerEditModalProps {
@@ -166,11 +166,11 @@ const CustomerEditModal: FC<ICustomerEditModalProps> = ({
 		},
 	})
 
-	if (id || id === '0') {
+	if (id || id === 0) {
 		return (
 			<Modal isOpen={isOpen} setIsOpen={setIsOpen} size='md' titleId={id.toString()}>
 				<ModalHeader setIsOpen={setIsOpen} className='p-4'>
-					<ModalTitle id={id}>{item?.position_name || 'Update Status'}</ModalTitle>
+					<ModalTitle id={id.toString()}>{item?.position_name || 'Update Status'}</ModalTitle>
 				</ModalHeader>
 				<ModalBody className='px-4'>
 					<div className='row g-4'>
@@ -193,7 +193,7 @@ const CustomerEditModal: FC<ICustomerEditModalProps> = ({
 												name='process_status'
 												//onChange={formik.handleChange}
 												onChange={(e) => {
-													getDataInterviewer(e)
+													getDataInterviewer(e as React.ChangeEvent<HTMLInputElement>)
 													//formik.handleChange(e)
 												}}
 												value={formik.values.process_status}
@@ -239,8 +239,8 @@ const CustomerEditModal: FC<ICustomerEditModalProps> = ({
 												onChange={formik.handleChange}
 												value={formik.values.process_description}
 												name='process_description'
-												invalidFeedback={formik.errors.process_description}
-												isTouched={formik.touched.process_description}
+												invalidFeedback={typeof formik.errors.process_description === 'string' ? formik.errors.process_description : undefined}
+												isTouched={typeof formik.touched.process_description === 'boolean' ? formik.touched.process_description : undefined}
 												onFocus={() => {
 													formik.setErrors({})
 												}}

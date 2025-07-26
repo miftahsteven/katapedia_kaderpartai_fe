@@ -59,7 +59,7 @@ import useQueryLocs from '../../../hooks/useQueryLocs'
 import useQueryPositionsSelect from '../../../hooks/useQueryPositionsSelect'
 //import useQueryProbation from '../../../hooks/useQueryProbation'
 import useQueryAnggota from '../../../hooks/useQueryAnggota'
-import TambahAnggota from '../_common/TambahAnggota'
+//import TambahAnggota from '../../../../_common/TambahAnggota'
 
 // import useMutateCreatePromote from '../hooks/useMutateCreatePromote'
 import ViewDetail from '../_common/ViewDetail'
@@ -700,7 +700,7 @@ const Index: NextPage = () => {
 					</div>
 				</div>
 			</Page>			
-			<TambahAnggota setIsOpen={setEditModalStatus} isOpen={editModalStatus} id='0' />	
+			{/* <TambahAnggota setIsOpen={setEditModalStatus} isOpen={editModalStatus} id='0' />	 */}
 			<ViewDetail setIsOpen={setViewDetailDataModal} isOpen={viewDetailDataModal} id={idSelected} dataEmployeeSelected={dataEmployeeSelected} />
 			<OffCanvas
 				setOpen={setUpcomingEventsEditOffcanvas}
