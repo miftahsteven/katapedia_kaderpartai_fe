@@ -5,7 +5,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 // import { useDispatch } from 'react-redux';
 // //import { updateCanvas } from '../../../redux/actions/canvasActions';
 // import { toast } from 'react-toastify';
-import useQueryPositionsSelect from '../hooks/useQueryPositionsSelect'
+import useQueryPositionsSelect from '../../../hooks/useQueryPositionsSelect'
 import OffCanvas, {
 	OffCanvasBody,
 	OffCanvasHeader,
@@ -16,12 +16,12 @@ import FormGroup from '../../../components/bootstrap/forms/FormGroup'
 import Input from '../../../components/bootstrap/forms/Input';
 import Icon from '../../../components/icon/Icon'
 import Select from '../../../components/bootstrap/forms/Select';
-import useQueryProv from '../hooks/useQueryProv'
-import useQueryCities from '../hooks/useQueryCities'
-import useQueryDistricts from '../hooks/useQueryDistricts'
+import useQueryProv from '../../../hooks/useQueryProv'
+import useQueryCities from '../../../hooks/useQueryCities'
+import useQueryDistricts from '../../../hooks/useQueryDistricts'
 //import useQueryPositionsSelect from '../hooks/useQueryPositionsSelect'
-import useMutateUpdateRecruitment from '../hooks/useMutateUpdateRecruitment'
-import useQueryLocs from '../hooks/useQueryLocs'
+import useMutateUpdateRecruitment from '../../../hooks/useMutateUpdateRecruitment'
+import useQueryLocs from '../../../hooks/useQueryLocs'
 import dayjs from 'dayjs'
 import { useRouter } from 'next/router'
 import showNotification from '../../../components/extras/showNotification'
@@ -73,7 +73,7 @@ const CanvasEdit: React.FC<ICustomerEditCanvas> = ({
     let dataProvRef = []
     let dataCityRef = []
     if (dataProvince !== undefined) {
-        dataProvRef = dataProvince.data.map((items) => ({
+        dataProvRef = dataProvince.data.map((items: any) => ({
             value: items.prov_id,
             text: `${items.prov_name}`,
         }))        
@@ -141,7 +141,7 @@ const CanvasEdit: React.FC<ICustomerEditCanvas> = ({
     const dataPosition = useQueryPositionsSelect()
 	let dataPositionRef = []
 	if (dataPosition !== undefined) {
-		dataPositionRef = dataPosition.data.map((items) => ({
+		dataPositionRef = dataPosition.data.map((items: any) => ({
 			value: items.id,
 			text: `${items.position_name}`,
 			position_code: items.position_code,
@@ -252,7 +252,21 @@ const CanvasEdit: React.FC<ICustomerEditCanvas> = ({
             formData.append('cv_uploaded', values.cv_uploaded)
             console.log('---> data append', Object.fromEntries(formData))
             mutate(
-                { ...Object.fromEntries(formData) },
+                { ...(Object.fromEntries(formData) as { 
+                    id: any; 
+                    position_id: any; 
+                    fullname: any; 
+                    gender: any; 
+                    birthdate: any; 
+                    email: any; 
+                    phone: any; 
+                    nik: any; 
+                    address: any; 
+                    prov_id: any; 
+                    city_id: any; 
+                    district_id: any; 
+                    subdistrict_id: any; 
+                }) },
                 {
                     onSuccess: (data) => {
                         if (data) {
