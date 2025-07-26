@@ -128,6 +128,9 @@ const CustomerEditModal: FC<ICustomerEditModalProps> = ({
 		fullname?: string
 		gender?: string
 		birthdate?: string
+		experience?: string
+		position_id?: string
+		education?: string
 		email?: string
 		phone?: string
 		address?: string
@@ -135,8 +138,14 @@ const CustomerEditModal: FC<ICustomerEditModalProps> = ({
 		city_id?: string
 		district_id?: string
 		subdistrict_id?: string
+		cv_uploaded?: string
+		npwp?: string
 		nik?: string
 		status?: number
+	}
+	
+	interface recruitmentData extends ItemData {
+		experience?: string; // Add experience property here
 	}
 
 	const itemData: ItemData = {}
@@ -151,9 +160,9 @@ const CustomerEditModal: FC<ICustomerEditModalProps> = ({
 			fullname: Number(id) > 0 ? item?.fullname : '',
 			gender: Number(id) > 0 ? item?.gender : '',
 			birthdate: Number(id) > 0 ? item?.birthdate : '',
-			//experience: Number(id) > 0 ? item?.experience : '',
-			//position_id: Number(id) > 0 ? item?.position_id : '',
-			//education: Number(id) > 0 ? item?.education : '',
+			experience: Number(id) > 0 ? item?.experience : '',
+			position_id: Number(id) > 0 ? item?.position_id : '',
+			education: Number(id) > 0 ? item?.education : '',
 			email: Number(id) > 0 ? item?.email : '',
 			phone: Number(id) > 0 ? item?.phone : '',
 			address: Number(id) > 0 ? item?.address : '',
@@ -161,8 +170,8 @@ const CustomerEditModal: FC<ICustomerEditModalProps> = ({
 			city_id: Number(id) > 0 ? item?.city_id : '',
 			district_id: Number(id) > 0 ? item?.district_id : '',
 			subdistrict_id: Number(id) > 0 ? item?.subdistrict_id : '',
-			//cv_uploaded: Number(id) > 0 ? item?.cv_uploaded : '',
-			//npwp: Number(id) > 0 ? item?.npwp : '',
+			cv_uploaded: Number(id) > 0 ? item?.cv_uploaded : '',
+			npwp: Number(id) > 0 ? item?.npwp : '',
 			nik: Number(id) > 0 ? item?.nik : '',
 			status: Number(id) > 0 ? item?.status : 1,
 		},
@@ -172,7 +181,8 @@ const CustomerEditModal: FC<ICustomerEditModalProps> = ({
 				birthdate?: string
 				email?: string
 				phone?: string
-				address?: string				
+				address?: string
+				npwp?: string
 				nik?: string
 			} = {}
 
@@ -194,7 +204,9 @@ const CustomerEditModal: FC<ICustomerEditModalProps> = ({
 			} else if (values.phone.length < 10) {
 				errors.phone = 'Nomor Telepon Tidak Valid'
 			}
-			
+			if (!values.npwp) {
+				errors.npwp = 'Wajib Diisi'
+			}
 			if (!values.nik) {
 				errors.nik = 'Wajib Diisi'
 			} else if (values.nik.length < 16) {
@@ -210,8 +222,8 @@ const CustomerEditModal: FC<ICustomerEditModalProps> = ({
 		},
 		validateOnChange: false,
 		onSubmit: (values) => {
-			//const today = new Date(values.birthdate)
-			const today = new Date(values.birthdate || Date.now())
+			const today = values.birthdate ? new Date(values.birthdate) : new Date()
+
 			const yyyy = today.getFullYear()
 			const mm = String(today.getMonth() + 1).padStart(2, '0')
 			const dd = String(today.getDate()).padStart(2, '0')
@@ -220,14 +232,13 @@ const CustomerEditModal: FC<ICustomerEditModalProps> = ({
 			//console.log('Data Tanggal Lahir', formattedDate)
 			const formData = new FormData()
 			//console.log(' ---> submit', JSON.stringify(values))
-			const positionId = 1;
-			formData.append('position_id', String(positionId))
+			formData.append('position_id', values.position_id || '')
 			formData.append('fullname', values.fullname || '')
 			formData.append('gender', values.gender || '')
 			formData.append('birthdate', formattedDate || '')
-			//formData.append('experience', values.experience || '')
-			//formData.append('education', values.education || '')
-			formData.append('email', values.email || '')
+			formData.append('experience', values.experience || '')
+			formData.append('education', values.education || '')
+			formData.append('email', values.email || '')	
 			formData.append('phone', values.phone || '')
 			formData.append('nik', values.nik || '')
 			formData.append('address', values.address || '')
@@ -235,28 +246,36 @@ const CustomerEditModal: FC<ICustomerEditModalProps> = ({
 			formData.append('city_id', values.city_id || '')
 			formData.append('district_id', values.district_id || '')
 			formData.append('subdistrict_id', values.subdistrict_id || '')
-			//formData.append('npwp', values.npwp || '')
-			formData.append('status', String(values.status || ''))
-			//formData.append('cv_uploaded', values.cv_uploaded)			
+			formData.append('npwp', values.npwp || '')
+			formData.append('status', values.status?.toString() || '1')
+			formData.append('cv_uploaded', values.cv_uploaded || '')
+			console.log('---> data append', Object.fromEntries(formData))
 			mutate(
-				{ ...(Object.fromEntries(formData) as { 
-					position_id: any; 
-					fullname: any; 
-					gender: any; 
-					birthdate: any; 
-					email: any; 
-					phone: any; 
-					nik: any; 
-					address: any; 
-					prov_id: any; 
-					city_id: any; 
-					district_id: any; 
-					subdistrict_id: any; 
-					status: any; 
-				}) },
+				{
+					position_id: formik.values.position_id ? Number(formik.values.position_id) : undefined,
+					fullname: formik.values.fullname || '',
+					gender: formik.values.gender || '',
+					birthdate: formattedDate,
+					//experience: formik.values.experience || '',
+					//education: formik.values.education || '',
+					email: formik.values.email || '',
+					phone: formik.values.phone || '',
+					nik: formik.values.nik || '',
+					address: formik.values.address || '',
+					prov_id: formik.values.prov_id ? Number(formik.values.prov_id) : 0,
+					city_id: formik.values.city_id ? Number(formik.values.city_id) : 0,
+					district_id: formik.values.district_id ? Number(formik.values.district_id) : 0,
+					subdistrict_id: formik.values.subdistrict_id ? Number(formik.values.subdistrict_id) : 0,
+					//npwp: formik.values.npwp || '',
+					status: formik.values.status?.toString() || '1',
+					//cv_uploaded: formik.values.cv_uploaded,
+				},
 				{
 					onSuccess: (data) => {
-						if (data) {							
+						if (data) {
+							//console.log(JSON.stringify(data));
+							//setUser(data);
+							//localStorage.setItem('dataLogin', JSON.stringify(data));
 							setIsOpen(false)
 							showNotification(
 								<span className='d-flex align-items-center'>
@@ -326,9 +345,14 @@ const CustomerEditModal: FC<ICustomerEditModalProps> = ({
 		return (
 			<Modal isOpen={isOpen} setIsOpen={setIsOpen} size='xl' titleId={id.toString()}>
 				<ModalHeader setIsOpen={setIsOpen} className='p-4'>
-					<ModalTitle id={id}>{'Rekrutan Baru'}</ModalTitle>
+					<ModalTitle id={id}>{'Anggota Baru'}</ModalTitle>
 				</ModalHeader>
-				<ModalBody className='px-4'>					
+				<ModalBody className='px-4'>
+					<div className='row g-4'>
+						<div className='col-md-12'>
+							
+						</div>
+					</div>
 					<div className='row g-4'>
 						<div className='col-md-6'>
 							<Card className='rounded-1 mb-0'>
@@ -379,21 +403,37 @@ const CustomerEditModal: FC<ICustomerEditModalProps> = ({
 													formik.setErrors({})
 												}}
 											/>
-										</FormGroup>	
-										<FormGroup id='phone' label='Handphone/WA' className='col-12'>
+										</FormGroup>
+										<FormGroup
+											id='experience'
+											label='Pengalaman Kerja (Tahun)'
+											className='col-12'>
 											<Input
-												type='tel'
+												type='text'
 												onChange={formik.handleChange}
-												name='phone'
-												placeholder='0818xxxxxx'
-												value={formik.values.phone}
-												invalidFeedback={formik.errors.phone}
-												isTouched={formik.touched.phone}
+												name='experience'
+												value={formik.values.experience}
+												invalidFeedback={formik.errors.experience}
+												isTouched={formik.touched.experience}
 												onFocus={() => {
 													formik.setErrors({})
 												}}
 											/>
-										</FormGroup>									
+										</FormGroup>
+										<FormGroup
+											id='education'
+											label='Pendidikan Terakhir'
+											className='col-12'>
+											<Select
+												id='education'
+												ariaLabel='Pilih Pendidikan'
+												name='education'
+												onChange={formik.handleChange}
+												value={formik.values.education}
+												placeholder='Pilih...'
+												list={pendidikan}
+											/>
+										</FormGroup>
 										<FormGroup id='email' label='Email' className='col-12'>
 											<Input
 												type='email'
@@ -406,7 +446,21 @@ const CustomerEditModal: FC<ICustomerEditModalProps> = ({
 													formik.setErrors({})
 												}}
 											/>
-										</FormGroup>										
+										</FormGroup>
+										<FormGroup id='phone' label='Telepon' className='col-12'>
+											<Input
+												type='tel'
+												onChange={formik.handleChange}
+												name='phone'
+												placeholder='0818xxxxxx'
+												value={formik.values.phone}
+												invalidFeedback={formik.errors.phone}
+												isTouched={formik.touched.phone}
+												onFocus={() => {
+													formik.setErrors({})
+												}}
+											/>
+										</FormGroup>
 										<FormGroup id='nik' label='NIK' className='col-12'>
 											<Input
 												type='number'
@@ -427,7 +481,7 @@ const CustomerEditModal: FC<ICustomerEditModalProps> = ({
 						<div className='col-md-6'>
 							<Card className='rounded-1 mb-0'>
 								<CardBody>
-									<div className='row g-3'>										
+									<div className='row g-3'>
 										<FormGroup id='address' label='Alamat' className='col-12'>
 											<Textarea
 												size='lg'
@@ -499,7 +553,39 @@ const CustomerEditModal: FC<ICustomerEditModalProps> = ({
 												list={dataLoc}
 											/>
 										</FormGroup>
-																				
+										<FormGroup id='npwp' label='NPWP' className='col-12'>
+											<Input
+												type='number'
+												onChange={formik.handleChange}
+												name='npwp'
+												value={formik.values.npwp}
+												invalidFeedback={formik.errors.npwp}
+												isTouched={formik.touched.npwp}
+												onFocus={() => {
+													formik.setErrors({})
+												}}
+											/>
+										</FormGroup>
+										<FormGroup id='filecv' label='File CV' className='col-12'>
+											<Input
+												type='file'
+												//onChange={formik.handleChange}
+												onChange={(event: any) => {
+													formik.setFieldValue(
+														'cv_uploaded',
+														event.currentTarget.files[0],
+													)
+												}}
+												name='cv_uploaded'
+												//value={formik.values.cv_uploaded}
+												invalidFeedback={formik.errors.cv_uploaded}
+												isTouched={formik.touched.cv_uploaded}
+												accept='application/pdf'
+												onFocus={() => {
+													formik.setErrors({})
+												}}
+											/>
+										</FormGroup>
 									</div>
 								</CardBody>
 							</Card>

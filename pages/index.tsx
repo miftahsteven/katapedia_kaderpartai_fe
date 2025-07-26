@@ -1,128 +1,176 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import type { NextPage } from 'next'
 import { GetStaticProps } from 'next'
 import Head from 'next/head'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { useTour } from '@reactour/tour'
-import Button, { ButtonGroup } from '../components/bootstrap/Button'
+import { useFormik } from 'formik'
+import classNames from 'classnames'
+import useTourStep from '../hooks/useTourStep'
+//import USERS from '../common/data/userDummyData'
+import USERS from '../common/data/anggotaDummyData'
 import PageWrapper from '../layout/PageWrapper/PageWrapper'
 import { demoPagesMenu } from '../menu'
-import SubHeader, {
-	SubHeaderLeft,
-	SubHeaderRight,
-	SubheaderSeparator,
-} from '../layout/SubHeader/SubHeader'
-import CommonAvatarTeam from '../common/partial/other/CommonAvatarTeam'
-import ThemeContext from '../context/themeContext'
-import useDarkMode from '../hooks/useDarkMode'
-import { TABS, TTabs } from '../common/type/helper'
+import SubHeader, { SubHeaderLeft, SubHeaderRight } from '../layout/SubHeader/SubHeader'
+import Icon from '../components/icon/Icon'
+import Input from '../components/bootstrap/forms/Input'
+import Dropdown, { DropdownMenu, DropdownToggle } from '../components/bootstrap/Dropdown'
+import Button from '../components/bootstrap/Button'
+import FormGroup from '../components/bootstrap/forms/FormGroup'
+import Label from '../components/bootstrap/forms/Label'
+import Checks, { ChecksGroup } from '../components/bootstrap/forms/Checks'
+import SERVICES from '../common/data/serviceDummyData'
 import Page from '../layout/Page/Page'
-import CommonDashboardAlert from '../common/partial/CommonDashboardAlert'
-import CommonDashboardUserCard from '../common/partial/CommonDashboardUserCard'
-import CommonDashboardMarketingTeam from '../common/partial/CommonDashboardMarketingTeam'
-import CommonDashboardDesignTeam from '../common/partial/CommonDashboardDesignTeam'
-import CommonDashboardIncome from '../common/partial/CommonDashboardIncome'
-import CommonDashboardRecentActivities from '../common/partial/CommonDashboardRecentActivities'
-import CommonDashboardUserIssue from '../common/partial/CommonDashboardUserIssue'
-import CommonDashboardSalesByStore from '../common/partial/CommonDashboardSalesByStore'
-import CommonDashboardWaitingAnswer from '../common/partial/CommonDashboardWaitingAnswer'
-import CommonDashboardTopSeller from '../common/partial/CommonDashboardTopSeller'
-import CommonMyWallet from '../common/partial/CommonMyWallet'
+import Card, { CardBody } from '../components/bootstrap/Card'
+import Badge from '../components/bootstrap/Badge'
 
 const Index: NextPage = () => {
-	const { mobileDesign } = useContext(ThemeContext)
-	/**
-	 * Tour Start
-	 */
-	const { setIsOpen } = useTour()
-	useEffect(() => {
-		if (
-			typeof window !== 'undefined' &&
-			localStorage.getItem('tourModalStarted') !== 'shown' &&
-			!mobileDesign
-		) {
-			setTimeout(() => {
-				setIsOpen(true)
-				if (typeof window !== 'undefined') {
-					localStorage.setItem('tourModalStarted', 'shown')
-				}
-			}, 3000)
-		}
+	useTourStep(18)
+	const [filterMenu, setFilterMenu] = useState(false)
 
-		return () => {}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [])
+	const formik = useFormik({
+		initialValues: {
+			available: false,
+			searchInput: '',
+			services: [],
+		},
+		onSubmit: () => {
+			setFilterMenu(false)
+			// alert(JSON.stringify(values, null, 2));
+		},
+	})
 
-	const { themeStatus } = useDarkMode()
-
-	const [activeTab, setActiveTab] = useState<TTabs>(TABS.YEARLY)
-
+	const searchUsers = Object.keys(USERS)
+		.filter(
+			(key) =>
+				USERS[key].username
+					.toLowerCase()
+					.includes(formik.values.searchInput.toLowerCase()) ||
+				USERS[key].name.toLowerCase().includes(formik.values.searchInput.toLowerCase()) ||
+				USERS[key].surname
+					.toLowerCase()
+					.includes(formik.values.searchInput.toLowerCase()) ||
+				USERS[key].position.toLowerCase().includes(formik.values.searchInput.toLowerCase()),
+		)
+		.filter((key2) => (formik.values.available ? USERS[key2].isOnline : key2))
+		.map((i) => USERS[i])
 	return (
 		<PageWrapper>
 			<Head>
-				<title>{demoPagesMenu.sales.subMenu.dashboard.text}</title>
+				<title>List Anggota </title>
 			</Head>
-			{/* <SubHeader>
+			<SubHeader>
 				<SubHeaderLeft>
-					<span className='h4 mb-0 fw-bold'>Overview</span>
-					<SubheaderSeparator />
-					<ButtonGroup>
-						{Object.keys(TABS).map((key) => (
-							<Button
-								key={key}
-								color={activeTab === TABS[key] ? 'success' : themeStatus}
-								onClick={() => setActiveTab(TABS[key])}>
-								{TABS[key]}
-							</Button>
-						))}
-					</ButtonGroup>
-				</SubHeaderLeft>
-				<SubHeaderRight>
-					<CommonAvatarTeam>
-						<strong>Marketing</strong> Team
-					</CommonAvatarTeam>
-				</SubHeaderRight>
-			</SubHeader> */}
+					<label
+						className='border-0 bg-transparent cursor-pointer me-0'
+						htmlFor='searchInput'>
+						<Icon icon='Search' size='2x' color='primary' />
+					</label>
+					<Input
+						id='searchInput'
+						type='search'
+						className='border-0 shadow-none bg-transparent'
+						placeholder='Search...'
+						onChange={formik.handleChange}
+						value={formik.values.searchInput}
+					/>
+				</SubHeaderLeft>				
+			</SubHeader>
 			<Page container='fluid'>
-				<div className='row'>
-					{/* <div className='col-12'>
-						<CommonDashboardAlert />
-					</div> */}
+				<div className='row row-cols-xxl-3 row-cols-lg-3 row-cols-md-2'>
+					{searchUsers.map((user) => (
+						<div key={user.username} className='col'>
+							<Card>
+								<CardBody>
+									<div className='row g-3'>
+										<div className='col d-flex'>
+											<div className='flex-shrink-0'>
+												<div className='position-relative'>
+													<div
+														className='ratio ratio-1x1'
+														style={{ width: 100 }}>
+														<div
+															className={classNames(
+																`bg-l25-${user.color}`,
+																'rounded-2',
+																'd-flex align-items-center justify-content-center',
+																'overflow-hidden',
+																'shadow',
+															)}>
+															<img
+																src={user.src}
+																alt={user.name}
+																width={100}
+															/>
+														</div>
+													</div>
+													{user.isOnline && (
+														<span className='position-absolute top-100 start-85 translate-middle badge border border-2 border-light rounded-circle bg-success p-2'>
+															<span className='visually-hidden'>
+																Online user
+															</span>
+														</span>
+													)}
+												</div>
+											</div>
+											<div className='flex-grow-1 ms-3 d-flex justify-content-between'>
+												<div className='w-100'>
+													<div className='row'>
+														<div className='col'>
+															<div className='d-flex align-items-center'>
+																<div className='fw-bold fs-5 me-2'>
+																	{`${user.name}`}
+																</div>
+																<small className='border border-success border-2 text-success fw-bold px-2 py-1 rounded-1'>
+																	{user.position}
+																</small>
+															</div>
 
-					<div className='col-xl-4'>
-						<CommonDashboardUserCard />
-					</div>
-					<div className='col-xl-4'>
-						<CommonDashboardMarketingTeam />
-					</div>
-					<div className='col-xl-4'>
-						<CommonDashboardDesignTeam />
-					</div>
-
-					<div className='col-xxl-6'>
-						{/* <CommonDashboardIncome activeTab={activeTab} /> */}
-						<CommonDashboardSalesByStore />
-					</div>
-					<div className='col-xxl-3'>
-						<CommonDashboardRecentActivities />
-					</div>
-					<div className='col-xxl-3'>
-						<CommonDashboardUserIssue />
-					</div>
-
-					{/* <div className='col-xxl-8'>
-						<CommonDashboardSalesByStore />
-					</div>
-					<div className='col-xxl-4 col-xl-6'>
-						<CommonDashboardWaitingAnswer />
-					</div> */}
-
-					{/* <div className='col-xxl-4 col-xl-6'>
-						<CommonMyWallet />
-					</div>
-					<div className='col-xxl-8'>
-						<CommonDashboardTopSeller />
-					</div> */}
+															<div className='text-muted'>
+																@{user.username}
+															</div>
+														</div>
+														{/* <div className='col-auto'>
+															<Button
+																icon='Info'
+																color='dark'
+																isLight
+																hoverShadow='sm'
+																tag='a'
+																to={`../${demoPagesMenu.appointment.subMenu.employeeID.path}/${user.id}`}
+																data-tour={user.name}
+															/>
+														</div> */}
+													</div>
+													{!!user?.services && (
+														<div className='row g-2 mt-3'>
+															{user?.services.map((service) => (
+																<div
+																	key={service.name}
+																	className='col-auto'>
+																	<Badge
+																		isLight
+																		color={service.color}
+																		className='px-3 py-2'>
+																		{/* <Icon
+																			icon={service.icon}
+																			size='lg'
+																			className='me-1'
+																		/> */}
+																		<i className={`bi bi-${service.icon} px-2`}></i>
+																		{service.name}
+																	</Badge>
+																</div>
+															))}
+														</div>
+													)}
+												</div>
+											</div>
+										</div>
+									</div>
+								</CardBody>
+							</Card>
+						</div>
+					))}
 				</div>
 			</Page>
 		</PageWrapper>

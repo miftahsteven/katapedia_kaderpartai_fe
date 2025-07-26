@@ -10,17 +10,11 @@ const DashboardHeader = () => {
 		<Header>
 			<HeaderLeft>
 				{/* <Search /> */}
-				{/* <img
-					src={LogoLimanara}
-					alt='Limanara Logo'
-					width={256} // TODO auto
-					height={65}
-					style={{ marginLeft: -30, borderTopLeftRadius: 10, borderBottomLeftRadius: 10 }}
-				/> */}
-				{/** create text for header logo */}
-				<video autoPlay loop muted className='logo-video' style={{ width: '220px', marginLeft: -10 }}>
-						<source src='/voteinsight.mp4' type='video/mp4' />
-				</video>
+				<div className='col-12'>
+					<h2 className='text-left'>
+					<strong>#KATAPEDIA</strong> 
+					</h2>
+				</div>
 			</HeaderLeft>
 			<CommonHeaderRight afterChildren={<CommonHeaderChat />} />
 		</Header>

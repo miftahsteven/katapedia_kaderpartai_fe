@@ -27,11 +27,11 @@ const DefaultHeader = () => {
 					height={65}
 					style={{ marginLeft: -30, borderTopLeftRadius: 10, borderBottomLeftRadius: 10 }}
 				/> */}
-				{/** create text for header logo with background black*/}
-				<video autoPlay loop muted className='logo-video' style={{ width: '220px', marginLeft: -10 }}>
-						<source src='/voteinsight.mp4' type='video/mp4' />
-				</video>
-				
+				<div className='col-12 font-size-20'>
+					<h3 className='text-left'>
+					<strong>#KATAPEDIA</strong> 
+					</h3>
+				</div>
 			</HeaderLeft>
 			<CommonHeaderRight afterChildren={<CommonHeaderChat />} />
 		</Header>

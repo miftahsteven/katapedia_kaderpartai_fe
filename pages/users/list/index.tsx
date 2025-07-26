@@ -107,9 +107,9 @@ const Index: NextPage = () => {
 	const handleActioneMutate = () => {
 		mutate(
 			{
-				id: idSelected,
-				statusUser: statusSelected == 0 ? 1 : 0,
-				action: action,
+				id: idSelected || '',
+				statusUser: statusSelected == 0 ? 'active' : 'inactive',
+				action: action == 'inactive' ? 'add' : 'remove',
 			},
 			{
 				onSuccess: data => {
@@ -171,68 +171,7 @@ const Index: NextPage = () => {
 						value={formik.values.searchInput}
 					/>
 				</SubHeaderLeft>
-				<SubHeaderRight>
-					{/* <Dropdown>
-						<DropdownToggle hasIcon={false}>
-							<Button
-								icon='FilterAlt'
-								color='dark'
-								isLight
-								className='btn-only-icon position-relative'>
-								{data.length !== filteredData.length && (
-									<Popovers desc='Filtering applied' trigger='hover'>
-										<span className='position-absolute top-0 start-100 translate-middle badge border border-light rounded-circle bg-danger p-2'>
-											<span className='visually-hidden'>
-												there is filtering
-											</span>
-										</span>
-									</Popovers>
-								)}
-							</Button>
-						</DropdownToggle>
-						<DropdownMenu isAlignmentEnd size='lg'>
-							<div className='container py-2'>
-								<div className='row g-3'>
-									<FormGroup label='Balance' className='col-12'>
-										<InputGroup>
-											<Input
-												id='minPrice'
-												ariaLabel='Minimum price'
-												placeholder='Min.'
-												onChange={formik.handleChange}
-												value={formik.values.minPrice}
-											/>
-											<InputGroupText>to</InputGroupText>
-											<Input
-												id='maxPrice'
-												ariaLabel='Maximum price'
-												placeholder='Max.'
-												onChange={formik.handleChange}
-												value={formik.values.maxPrice}
-											/>
-										</InputGroup>
-									</FormGroup>
-									<FormGroup label='Payments' className='col-12'>
-										<ChecksGroup>
-											{Object.keys(PAYMENTS).map((payment) => (
-												<Checks
-													key={PAYMENTS[payment].name}
-													id={PAYMENTS[payment].name}
-													label={PAYMENTS[payment].name}
-													name='payment'
-													value={PAYMENTS[payment].name}
-													onChange={formik.handleChange}
-													checked={formik.values.payment.includes(
-														PAYMENTS[payment].name,
-													)}
-												/>
-											))}
-										</ChecksGroup>
-									</FormGroup>
-								</div>
-							</div>
-						</DropdownMenu>
-					</Dropdown> */}
+				<SubHeaderRight>					
 					<SubheaderSeparator />
 					<Button
 						icon='PersonAdd'
@@ -263,30 +202,8 @@ const Index: NextPage = () => {
 											</th>
 											<th>Email</th>
 											<th>Phone</th>
-											<th>Role</th>
-											{/* <th>Group</th>
-											<th>Divisi</th>
-											<th
-												onClick={() => requestSort('type')}
-												className='cursor-pointer text-decoration-underline'>
-												Department
-												<Icon
-													size='lg'
-													className={getClassNamesFor('balance')}
-													icon='FilterList'
-												/>
-											</th> */}
-											<th>Tanggal Terdaftar</th>
-											{/* <th
-												onClick={() => requestSort('payout')}
-												className='cursor-pointer text-decoration-underline'>
-												Payout{' '}
-												<Icon
-													size='lg'
-													className={getClassNamesFor('payout')}
-													icon='FilterList'
-												/>
-											</th> */}
+											<th>Role</th>											
+											<th>Tanggal Terdaftar</th>											
 											<td />
 										</tr>
 									</thead>
@@ -340,24 +257,12 @@ const Index: NextPage = () => {
 													</Button>
 												</td>
 												<td>{i.phone}</td>
-												<td>{i.type}</td>
-												{/* <td>{i.group == null ? 'n/a' : i.group}</td>
-												<td>{i.division == null ? 'n/a' : i.division}</td>
-												<td>
-													{i.departement == null ? 'n/a' : i.departement}
-												</td> */}
+												<td>{i.type}</td>												
 												<td>
 													{i.membershipDate == null
 														? 'n/a'
 														: i.membershipDate}
-												</td>
-												{/* <td>
-													<Icon
-														size='lg'
-														icon={`custom ${i.payout.toLowerCase()}`}
-													/>{' '}
-													{i.payout}
-												</td> */}
+												</td>												
 												<td>
 													<Dropdown>
 														<DropdownToggle hasIcon={false}>

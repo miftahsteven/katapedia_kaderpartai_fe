@@ -364,7 +364,7 @@ const Navigation = forwardRef<HTMLElement, INavigationProps>(
 			isHorizontal: boolean | undefined,
 			isMore: boolean | undefined,
 		) {
-			console.log('CEK DATA MENU', data)
+			//console.log('CEK DATA MENU', data)
 			return Object.keys(data).map((item) =>
 				data[item].path ? (
 					<Item

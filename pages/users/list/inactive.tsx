@@ -107,9 +107,9 @@ const Index: NextPage = () => {
 	const handleActioneMutate = () => {
 		mutate(
 			{
-				id: idSelected,
-				statusUser: statusSelected == 0 ? 1 : 0,
-				action: action,
+				id: idSelected || '',
+				statusUser: statusSelected == 0 ? 'active' : 'inactive',
+				action: action == 'inactive' ? 'add' : 'remove',
 			},
 			{
 				onSuccess: data => {

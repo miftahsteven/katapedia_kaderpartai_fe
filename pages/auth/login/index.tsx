@@ -30,9 +30,9 @@ const LoginHeader: FC<ILoginHeaderProps> = ({ isNewUser }) => {
 	if (isNewUser) {
 		return (
 			<>
-				<div className='text-center h1 fw-bold mt-5'>Registrasi Pelamar,</div>
+				<div className='text-center h1 fw-bold mt-5'>Registrasi Akun,</div>
 				<div className='text-center h4 text-muted mb-5'>
-					Untuk melanjutkan, silakan isi data berikut!
+					Daftarkan NIP anda sebagai username!
 				</div>
 			</>
 		)
@@ -104,17 +104,12 @@ const Login: NextPage<ILoginProps> = ({ isSignUp }) => {
 						if (data) {
 							//console.log(JSON.stringify(data));
 							//setUser(data);
-							//let token = null;
-							if (typeof window !== 'undefined') {
-								//token = localStorage.getItem('token');
-								localStorage.setItem('dataLogin', JSON.stringify(data) || '{}')
-							}
-							
+							localStorage.setItem('dataLogin', JSON.stringify(data))
 						}
 						handleOnClick()
 					},
 					onError: (error) => {
-						formik.setFieldError('loginPassword', 'Username and password do not match.')
+						formik.setFieldError('loginPassword', 'Check Server.')
 					},
 				},
 			)
@@ -199,50 +194,32 @@ const Login: NextPage<ILoginProps> = ({ isSignUp }) => {
 		}, 1000)
 	}
 
-	return (				
+	return (
 		<PageWrapper
 			isProtected={false}
-			className={classNames('bg-gradient',{
+			className={classNames({
 				// 'bg-dark': !singUpStatus,
-				'bg-dark': true,
+				'bg-light': true,
 			})}>
 			<Head>
-				<title>{singUpStatus ? 'Sign Up' : 'Login'} {process.env.NEXT_PUBLIC_TITLE_PREFIX}</title>
+				<title>{singUpStatus ? 'Sign Up' : 'Login'}</title>
 			</Head>
-			{/** create page with background*/}			
-			<Page className='p-0' container='fluid'>
+			<Page className='p-0'>
 				<div className='row h-100 align-items-center justify-content-center'
 				style={{
-					backgroundImage: `url('/voteinsight_bg.jpg')`,
+					backgroundImage: `url('/background_katapedia.jpg')`,
 					backgroundSize: 'cover',
 					backgroundPosition: 'center',
 					backgroundRepeat: 'no-repeat'}}>
-					<div className={classNames('col-lg-6 col-md-8 shadow-3d-container', {
-						'col-xl-4' : !singUpStatus,
-						'col-xl-6': singUpStatus,
-					})}>
+					<div className='col-xl-4 col-lg-6 col-md-8 shadow-3d-container'>
 						<Card className='' data-tour='login-page'>
-							<CardBody>
-								<div className='text-center my-5'>
-									<Link
-										href='/'
-										className={classNames(
-											'text-decoration-none  fw-bold display-2',
-											{
-												'text-dark': !darkModeStatus,
-												'text-light': darkModeStatus,
-											},
-										)}>
-										{/* <Logo width={200} /> */}
-										VOTEINSIGHT
-									</Link>
-								</div>
-								<div
+							<CardBody>								
+								{/* <div
 									className={classNames('rounded-3', {
 										'bg-l10-dark': !darkModeStatus,
 										'bg-dark': darkModeStatus,
 									})}>
-									{/* <div className='row row-cols-2 g-3 pb-3 px-3 mt-0'>
+									<div className='row row-cols-2 g-3 pb-3 px-3 mt-0'>
 										<div className='col'>
 											<Button
 												color={darkModeStatus ? 'light' : 'dark'}
@@ -269,10 +246,10 @@ const Login: NextPage<ILoginProps> = ({ isSignUp }) => {
 												Register
 											</Button>
 										</div>
-									</div> */}
-								</div>
+									</div>
+								</div> */}
 
-								<LoginHeader isNewUser={singUpStatus} />
+								{/* <LoginHeader isNewUser={singUpStatus} /> */}
 								<div
 									className={classNames(
 										'text-danger',
@@ -300,12 +277,11 @@ const Login: NextPage<ILoginProps> = ({ isSignUp }) => {
 								<form className='row g-4'>
 									{singUpStatus ? (
 										<>
-										<div className='row mb-3'>
-											<div className='col-6'>
+											<div className='col-12'>
 												<FormGroup
 													id='regUsername'
 													isFloating
-													label='Nomor Handphone/Wa'>
+													label='Username/NIP'>
 													<Input
 														autoComplete='username'
 														value={register.values.regUsername}
@@ -320,7 +296,7 @@ const Login: NextPage<ILoginProps> = ({ isSignUp }) => {
 													/>
 												</FormGroup>
 											</div>
-											<div className='col-6'>
+											<div className='col-12'>
 												<FormGroup id='regEmail' isFloating label='Email'>
 													<Input
 														type='email'
@@ -335,9 +311,7 @@ const Login: NextPage<ILoginProps> = ({ isSignUp }) => {
 													/>
 												</FormGroup>
 											</div>
-										</div>
-										<div className='row'>
-											<div className='col-6'>
+											<div className='col-12'>
 												<FormGroup
 													id='regName'
 													isFloating
@@ -354,7 +328,7 @@ const Login: NextPage<ILoginProps> = ({ isSignUp }) => {
 													/>
 												</FormGroup>
 											</div>
-											<div className='col-6'>
+											<div className='col-12'>
 												<FormGroup id='regPhone' isFloating label='No.Telp'>
 													<Input
 														type='text'
@@ -369,7 +343,6 @@ const Login: NextPage<ILoginProps> = ({ isSignUp }) => {
 													/>
 												</FormGroup>
 											</div>
-										</div>
 											<div className='col-12'>
 												<Button
 													color='info'
@@ -385,7 +358,7 @@ const Login: NextPage<ILoginProps> = ({ isSignUp }) => {
 												<FormGroup
 													id='loginUsername'
 													isFloating
-													label='Username'
+													label='Username/NIP'
 													className={classNames({
 														'd-none': signInPassword,
 														'mb-3': true,
@@ -434,7 +407,7 @@ const Login: NextPage<ILoginProps> = ({ isSignUp }) => {
 											</div>
 											<div className='col-12'>
 												<Button
-													color='dark'
+													color='warning'
 													className='w-100 py-3'
 													onClick={formik.handleSubmit}>
 													Login
@@ -509,7 +482,7 @@ const Login: NextPage<ILoginProps> = ({ isSignUp }) => {
 									'link-light': singUpStatus,
 									'link-dark': !singUpStatus,
 								})}>
-								VOTEINSIGHT INOVATION &copy;2025
+								KATAPEDIA &copy;
 							</Link>
 							{/* <Link
 								href='/'
