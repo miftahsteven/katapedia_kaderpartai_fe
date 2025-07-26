@@ -29,7 +29,7 @@ const useMutateApprovedRecruitment = () => {
 	return useMutation({
 		mutationFn: register,
 		onSuccess: (data) => {
-			queryClient.invalidateQueries({ queryKey: 'approved-recruitment'})
+			queryClient.invalidateQueries({ queryKey: ['approved-recruitment']})
 
 			return data
 		},

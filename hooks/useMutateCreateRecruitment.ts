@@ -78,7 +78,7 @@ const useMutateCreateRecruitmen = () => {
 	return useMutation({
 		mutationFn: register,
 		onSuccess: (data) => {
-			queryClient.invalidateQueries({queryKey: 'recruitment-created'})
+			queryClient.invalidateQueries({queryKey: ['recruitment-created']})
 
 			return data
 		},

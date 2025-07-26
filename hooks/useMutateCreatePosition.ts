@@ -49,7 +49,7 @@ const useMutateCreatePosition = () => {
 	return useMutation({
 		mutationFn: register,
 		onSuccess: (data) => {
-			queryClient.invalidateQueries({queryKey: 'position-created-update'})
+			queryClient.invalidateQueries({queryKey: ['position-created-update']})
 
 			return data
 		},

@@ -23,7 +23,7 @@ const useMutateActionVacancy = () => {
 	return useMutation({
 		mutationFn: deleteVacancy,
 		onSuccess: (data) => {
-			queryClient.invalidateQueries({queryKey: 'vacancy-remove'})
+			queryClient.invalidateQueries({queryKey: ['vacancy-remove']})
 
 			return data
 		},

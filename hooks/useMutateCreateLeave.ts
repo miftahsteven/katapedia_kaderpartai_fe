@@ -31,7 +31,7 @@ const useMutateCreateLeave = () => {
 	return useMutation({
 		mutationFn: register,
 		onSuccess: (data) => {
-			queryClient.invalidateQueries({queryKey: 'leave-created'})
+			queryClient.invalidateQueries({queryKey: ['leave-created']})
 
 			return data
 		},
