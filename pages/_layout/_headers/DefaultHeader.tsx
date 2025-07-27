@@ -27,10 +27,10 @@ const DefaultHeader = () => {
 					height={65}
 					style={{ marginLeft: -30, borderTopLeftRadius: 10, borderBottomLeftRadius: 10 }}
 				/> */}
-				<div className='col-12 font'>
-					<h1 className='text-left'>
+				<div className='col-12'>
+					<h2 className='text-left' style={{ fontFamily: 'monospace' }}>
 					<strong>#KADERPARTAI</strong> 
-					</h1>
+					</h2>
 				</div>
 			</HeaderLeft>
 			<CommonHeaderRight afterChildren={<CommonHeaderChat />} />

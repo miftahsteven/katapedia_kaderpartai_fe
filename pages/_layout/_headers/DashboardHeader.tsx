@@ -10,10 +10,10 @@ const DashboardHeader = () => {
 		<Header>
 			<HeaderLeft>
 				{/* <Search /> */}
-				<div className='col-12 font'>
-					<h1 className='text-center'>
-					<strong>#KADERPARTAI</strong> 
-					</h1>
+				<div className='col-12 text-align-center' style={{fontFamily: 'monospace'}}>
+					<h2 className='text-left'>
+						<strong>#KADERPARTAI</strong> 
+					</h2>
 				</div>
 			</HeaderLeft>
 			<CommonHeaderRight afterChildren={<CommonHeaderChat />} />
